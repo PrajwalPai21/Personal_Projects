@@ -7,7 +7,7 @@ function App() {
   return (
     <BrowserRouter>
       <Navbar />
-      <div className="pt-20">
+      <div className="">
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignUpPage />} />
