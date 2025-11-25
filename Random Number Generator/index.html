@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Number Generator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <label for="input">Enter a max number</label>
+    <input type="number" id="inputNum" placeholder="Enter a number">
+    <button id="inputButton">Submit</button>
+    <h1 id="H1"></h1>
+    <h2 id="H2"></h2>
+    <h3 id="H3"></h3>
+    <button class="btn btn-primary">Test</button>
+    <script>
+        document.getElementById("inputButton").addEventListener("click", printFunction);
+
+
+        function printFunction() {
+            const inputValue = document.getElementById("inputNum").value;
+            document.getElementById("H1").innerText = "Entered number is " + inputValue;
+
+            const randomNumber = Math.floor(Math.random() * inputValue) + 1;
+            document.getElementById("H2").innerText = "Random number generated is " + randomNumber;
+
+            if (randomNumber % 2 == 0)
+                document.getElementById("H3").innerHTML = randomNumber + " is an Even Number";
+            else
+                document.getElementById("H3").innerHTML = randomNumber + " is an Odd Number";
+        }      
+    </script>
+</body>
+
+</html>
