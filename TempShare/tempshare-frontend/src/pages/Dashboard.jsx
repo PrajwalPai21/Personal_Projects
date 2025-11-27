@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-
+// Remove the Scroll , its not needed
 const Dashboard = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   return (
     <div className="min-h-screen bg-gray-100 px-6">
-      <h1 className="text-3xl fond-bold mt-15 mb-8 text-center text-blue-600">
+      <h1 className="text-3xl font-bold mt-16 mb-8 text-center text-blue-600">
         Upload & Share Files Instantly!
       </h1>
       <div className="max-w-xl mx-auto bg-white shadow-lg rounded-2xl p-8">
@@ -23,7 +23,7 @@ const Dashboard = () => {
         </button>
       </div>
       <div className="max-w-xl mx-auto mt-10">
-        <h2 className="bg-white shadow rounded-lg p-4 text-gray 600">
+        <h2 className="bg-white shadow rounded-lg p-4 text-gray-600">
           No Uploads Yet.
         </h2>
       </div>
