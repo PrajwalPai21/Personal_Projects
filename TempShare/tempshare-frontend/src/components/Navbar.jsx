@@ -20,7 +20,7 @@ const Navbar = () => {
     <nav className="w-full bg-white shadow-mg fixed top-0 left-0 z-50 rounded ">
       <div className="max-w-5xl mx-auto flex justify-between items-center py-3 px-6">
         <Link to="/dashboard" className="text-2xl font-bold text-blue-600">
-          PaiShare
+          TempShare
         </Link>
 
         <div className="hidden md:flex space-x-8 text-sm items-center">
