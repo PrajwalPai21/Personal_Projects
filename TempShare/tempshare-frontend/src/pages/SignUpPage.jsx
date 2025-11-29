@@ -5,12 +5,36 @@ const SignUpPage = () => {
     fullName: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
 
   const [message, setMessage] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    //validatoin part
+    if (!formData.fullName || !formData.email || !formData.password) {
+      setMessage("All fields are necessary.");
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      setMessage("Password must be atleast 6 characters.");
+      return;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      setMessage("Passwords do not match.");
+      return;
+    }
+
+    const emailRegex = /\S+@\S+\.\S/;
+    if (!emailRegex.test(formData.email)) {
+      setMessage("Invalid Email Format");
+      return;
+    }
+
     // data to send to the backend
     const dataToSend = {
       fullName: formData.fullName,
@@ -28,12 +52,13 @@ const SignUpPage = () => {
 
       const result = await response.text(); //backend returns plain text
       setMessage(result);
-
+      //Make this green
       if (result === "You have successfully sign up!") {
         setFormData({
           fullName: "",
           email: "",
           password: "",
+          confirmPassword: "",
         });
       }
     } catch (error) {
@@ -94,7 +119,19 @@ const SignUpPage = () => {
               required
             />
           </div>
-
+          <div>
+            <label className="block mb-1 font-medium">Confirm Password</label>
+            <input
+              type="password"
+              className="w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Re-Enter  your password"
+              value={formData.confirmPassword}
+              onChange={(e) =>
+                setFormData({ ...formData, confirmPassword: e.target.value })
+              }
+              required
+            ></input>
+          </div>
           <button
             type="submit"
             className="w-full bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700 transition"
