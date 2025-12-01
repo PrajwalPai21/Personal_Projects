@@ -2,9 +2,12 @@ package com.tempshare.tempshare_backend.controller;
 
 import com.tempshare.tempshare_backend.dto.LoginRequest;
 import com.tempshare.tempshare_backend.dto.SignUpRequest;
+import com.tempshare.tempshare_backend.model.User;
 import com.tempshare.tempshare_backend.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 //This class is responsible for handling API endpoints.
@@ -51,7 +54,10 @@ public class AuthController {
     → The DTO object receiving the parsed JSON.*/
 
     }
-
+    @GetMapping("/all-users")
+    public List<User> getAllUsers() {
+        return authService.getAllUsers();
+    }
     @PostMapping("/login")
     public String login(@RequestBody LoginRequest loginRequest) {
         return authService.loginFunc(loginRequest);

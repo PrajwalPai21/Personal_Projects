@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service // business logic
 @RequiredArgsConstructor
 public class AuthService {
@@ -38,5 +40,9 @@ public class AuthService {
             return "Wrong password";
 
         return "You have Logged in";
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 }
