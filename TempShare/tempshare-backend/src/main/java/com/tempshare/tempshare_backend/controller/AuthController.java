@@ -54,6 +54,7 @@ public class AuthController {
     → The DTO object receiving the parsed JSON.*/
 
     }
+    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/all-users")
     public List<User> getAllUsers() {
         return authService.getAllUsers();

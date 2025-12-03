@@ -23,6 +23,10 @@ const Navbar = () => {
           TempShare
         </Link>
 
+        <Link className={isActive("/all-users")} to="/all-users">
+          (Admin Only) All Users
+        </Link>
+
         <div className="hidden md:flex space-x-8 text-sm items-center">
           <Link className={isActive("/dashboard")} to="/dashboard">
             Dashboard
