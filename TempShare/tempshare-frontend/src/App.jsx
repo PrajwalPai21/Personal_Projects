@@ -3,6 +3,7 @@ import SignUpPage from "./pages/SignUpPage";
 import LoginPage from "./pages/LoginPage.jsx";
 import Contact from "./pages/Contact.jsx";
 import { UsersPage } from "./pages/UsersPage.jsx";
+import { Home } from "./pages/Home.jsx";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/all-users" element={<UsersPage />} />
+          <Route path="/home" element={<Home />} />
         </Routes>
       </div>
     </BrowserRouter>
