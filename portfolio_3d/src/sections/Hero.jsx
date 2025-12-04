@@ -1,5 +1,5 @@
 import React from "react";
-import { HeroText } from "../components/HeroText";
+import HeroText from "../components/HeroText";
 
 const Hero = () => {
   return (
