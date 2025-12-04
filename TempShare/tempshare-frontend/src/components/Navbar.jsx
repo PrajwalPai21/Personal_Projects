@@ -19,7 +19,7 @@ const Navbar = () => {
   return (
     <nav className="w-full bg-white shadow-mg fixed top-0 left-0 z-50 rounded ">
       <div className="max-w-5xl mx-auto flex justify-between items-center py-3 px-6">
-        <Link to="/dashboard" className="text-2xl font-bold text-blue-600">
+        <Link to="/home" className="text-2xl font-bold text-blue-600">
           TempShare
         </Link>
 
