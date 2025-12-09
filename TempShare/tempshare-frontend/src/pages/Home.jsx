@@ -28,7 +28,7 @@ export const Home = () => {
           </Link>
         </div>
       </section>
-      {/* WHY USE THIS */}
+
       <section className="py-16 bg-white">
         <h2 className="text-3xl font-bold text-center mb-10">Why TempShare?</h2>
 
@@ -51,7 +51,6 @@ export const Home = () => {
           </div>
         </div>
       </section>
-      {/* HOW IT WORKS */}
       <section className="py-16 bg-gray-100">
         <h2 className="text-3xl font-bold text-center mb-10">How It Works</h2>
 
