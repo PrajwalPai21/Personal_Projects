@@ -5,8 +5,41 @@ const Dashboard = () => {
   const [uploading, setUploading] = useState(false);
   const [downloadLink, setDownloadLink] = useState(null);
 
+  const dangerousFileExtensions = [
+    // Need to add a way to check if file is dangerous or not
+    ".exe",
+    ".msi",
+    ".bat",
+    ".sh",
+    ".cmd",
+    ".js",
+    ".php",
+    ".py",
+    ".jar",
+    ".dll",
+    ".xz",
+  ];
+
   const handleFileChange = (e) => {
-    setSelectedFile(e.target.files[0]);
+    const file = e.target.files[0];
+
+    if (!file) return;
+
+    const fileName = file.name.toLowerCase();
+    // some = if some of the elements are satifying the condiction
+    const isDangerous = dangerousFileExtensions.some((ext) =>
+      fileName.endsWith(ext)
+    );
+
+    if (isDangerous) {
+      alert(
+        "This file type is not allowed for security reasons. Support will be added in the future"
+      );
+      setSelectedFile(null);
+      return;
+    }
+
+    setSelectedFile(file);
     setDownloadLink(null); //reset link if i am uploading new link
   };
 
@@ -21,7 +54,7 @@ const Dashboard = () => {
     setTimeout(() => {
       setUploading(false);
 
-      // Temporary fake link frontend only
+      // Temporary fake link frontend only , NEED TO UPDATE SOON for backend supoort
       setDownloadLink("Https://tempshare.com/file/:" + selectedFile.name);
     }, 1500);
   };
