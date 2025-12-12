@@ -1,46 +1,13 @@
 import React, { useState } from "react";
-// Remove the Scroll , its not needed
+
 const Dashboard = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [downloadLink, setDownloadLink] = useState(null);
 
-  const dangerousFileExtensions = [
-    // Need to add a way to check if file is dangerous or not
-    ".exe",
-    ".msi",
-    ".bat",
-    ".sh",
-    ".cmd",
-    ".js",
-    ".php",
-    ".py",
-    ".jar",
-    ".dll",
-    ".xz",
-  ];
-
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-
-    if (!file) return;
-
-    const fileName = file.name.toLowerCase();
-    // some = if some of the elements are satifying the condiction
-    const isDangerous = dangerousFileExtensions.some((ext) =>
-      fileName.endsWith(ext)
-    );
-
-    if (isDangerous) {
-      alert(
-        "This file type is not allowed for security reasons. Support will be added in the future"
-      );
-      setSelectedFile(null);
-      return;
-    }
-
-    setSelectedFile(file);
-    setDownloadLink(null); //reset link if i am uploading new link
+    setSelectedFile(e.target.files[0]);
+    setDownloadLink(null); // reset link for new file gneerated
   };
 
   const handleUpload = async () => {
@@ -48,56 +15,43 @@ const Dashboard = () => {
       alert("Please select a file first!");
       return;
     }
+
     setUploading(true);
 
-    // time out to send data to the backend
+    // later: send file to backend using FormData
     setTimeout(() => {
       setUploading(false);
 
-      // Temporary fake link frontend only , NEED TO UPDATE SOON for backend supoort
-      setDownloadLink("Https://tempshare.com/file/:" + selectedFile.name);
+      // Temporary fake link (backend will generate real one later)
+      setDownloadLink("https://tempshare.com/file/" + selectedFile.name);
     }, 1500);
   };
 
   return (
     <div className="min-h-screen bg-gray-100 px-6 pt-20">
       <h1 className="text-3xl font-bold mb-8 text-center text-blue-600">
-        Upload & Share FIles Instantly!
+        Upload & Share Files Instantly!
       </h1>
-      <div className="max-w-xl mx-auto bg-white shadow-lg rounded-2xl p-8">
-        <h2 className="text-xl font-semibold mb-4">Select a File to Uplaod</h2>
 
-        {/* pick file */}
-        <input
-          type="file"
-          className="w-full mb-4"
-          onChange={handleFileChange}
-        />
-        {/* previewing the file  */}
+      <div className="max-w-xl mx-auto bg-white shadow-lg rounded-2xl p-8">
+        <h2 className="text-xl font-semibold mb-4">Select a File to Upload</h2>
+
+        {/* File Picker */}
+        <input type="file" className="w-full mb-4" onChange={handleFileChange} />
+
+        {/* File Preview */}
         {selectedFile && (
           <div className="bg-gray-100 p-3 rounded mb-4 text-sm">
-            <p>
-              <strong>File:</strong>
-              {selectedFile.name}
-            </p>
-
-            <p>
-              <strong>Size:</strong>
-              {(selectedFile.size / 1024).toFixed(2)}KB
-            </p>
-
-            <p>
-              <strong>Type:</strong>
-              {selectedFile.type || "Unknown"}
-            </p>
+            <p><strong>File:</strong> {selectedFile.name}</p>
+            <p><strong>Size:</strong> {(selectedFile.size / 1024).toFixed(2)} KB</p>
+            <p><strong>Type:</strong> {selectedFile.type || "Unknown"}</p>
           </div>
         )}
 
+        {/* Upload Button */}
         <button
           className={`w-full text-white py-2 rounded-lg transition ${
-            uploading
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-blue-600 hover:bg-blue-700"
+            uploading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
           }`}
           onClick={handleUpload}
           disabled={uploading}
