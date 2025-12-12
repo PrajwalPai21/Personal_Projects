@@ -12,6 +12,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
+                .cors(cors -> {}) // Allow CORS and do NOT block controller-level @CrossOrigin rules.
                 //Spring Security blocks POST requests without CSRF token.
                 //My frontend doesn’t send CSRF token, so disable it temporarily.
 

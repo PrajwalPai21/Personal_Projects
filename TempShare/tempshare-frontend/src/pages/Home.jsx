@@ -2,16 +2,19 @@ import React from "react";
 import { Link } from "react-router-dom";
 export const Home = () => {
   return (
-    <div className="text-center py-20">
+    <div className="min-h-screen bg-gray-100">
+      {/* Hero Section */}
       <section className="text-center py-20">
         <h1 className="text-4xl md:text-5xl font-bold text-blue-600">
           Welcome to TempShare
         </h1>
+
         <p className="mt-4 text-lg text-gray-700 max-w-2xl mx-auto">
-          Upload and share files instantly using secure temporary liinks. Fast,
-          Simple, and perfect for quick sharing.
+          Upload and share files instantly using secure temporary links. Fast,
+          simple, and perfect for quick sharing.
         </p>
 
+        {/* Buttons */}
         <div className="mt-6 flex justify-center gap-4">
           <Link
             to="/signup"
@@ -29,6 +32,7 @@ export const Home = () => {
         </div>
       </section>
 
+      {/* Why Section */}
       <section className="py-16 bg-white">
         <h2 className="text-3xl font-bold text-center mb-10">Why TempShare?</h2>
 
@@ -51,6 +55,8 @@ export const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* How It Works */}
       <section className="py-16 bg-gray-100">
         <h2 className="text-3xl font-bold text-center mb-10">How It Works</h2>
 
@@ -78,6 +84,8 @@ export const Home = () => {
           </div>
         </div>
       </section>
+
+      {/* Footer */}
       <footer className="text-center py-6 bg-white text-gray-600 mt-8">
         © 2025 TempShare — Built by Prajwal Pai
       </footer>

@@ -2,75 +2,74 @@ import React, { useState } from "react";
 
 const Dashboard = () => {
   const [selectedFile, setSelectedFile] = useState(null);
-  const [uploading, setUploading] = useState(false);
-  const [downloadLink, setDownloadLink] = useState(null);
-
-  const handleFileChange = (e) => {
-    setSelectedFile(e.target.files[0]);
-    setDownloadLink(null); // reset link for new file gneerated
-  };
+  const [uploadMessage, setUploadMessage] = useState("");
+  const [downloadLink, setDownloadLink] = useState("");
 
   const handleUpload = async () => {
     if (!selectedFile) {
-      alert("Please select a file first!");
+      setUploadMessage("Please select a file first.");
       return;
     }
 
-    setUploading(true);
+    const formData = new FormData();
+    formData.append("file", selectedFile);
 
-    // later: send file to backend using FormData
-    setTimeout(() => {
-      setUploading(false);
+    try {
+      const response = await fetch("http://localhost:8080/files/upload", {
+        method: "POST",
+        body: formData, // no headers needed for multipart
+      });
 
-      // Temporary fake link (backend will generate real one later)
-      setDownloadLink("https://tempshare.com/file/" + selectedFile.name);
-    }, 1500);
+      if (!response.ok) {
+        setUploadMessage("Upload failed.");
+        return;
+      }
+
+      const result = await response.json();
+      setUploadMessage("Upload successful!");
+      setDownloadLink(result.downloadUrl);
+    } catch (error) {
+      setUploadMessage("Something went wrong.");
+    }
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 px-6 pt-20">
-      <h1 className="text-3xl font-bold mb-8 text-center text-blue-600">
+    <div className="min-h-screen bg-gray-100 px-6">
+      <h1 className="text-3xl fond-bold mt-15 mb-8 text-center text-blue-600">
         Upload & Share Files Instantly!
       </h1>
 
       <div className="max-w-xl mx-auto bg-white shadow-lg rounded-2xl p-8">
         <h2 className="text-xl font-semibold mb-4">Select a File to Upload</h2>
 
-        {/* File Picker */}
-        <input type="file" className="w-full mb-4" onChange={handleFileChange} />
+        <input
+          type="file"
+          className="w-full mb-4"
+          onChange={(e) => setSelectedFile(e.target.files[0])}
+        />
 
-        {/* File Preview */}
-        {selectedFile && (
-          <div className="bg-gray-100 p-3 rounded mb-4 text-sm">
-            <p><strong>File:</strong> {selectedFile.name}</p>
-            <p><strong>Size:</strong> {(selectedFile.size / 1024).toFixed(2)} KB</p>
-            <p><strong>Type:</strong> {selectedFile.type || "Unknown"}</p>
-          </div>
-        )}
-
-        {/* Upload Button */}
         <button
-          className={`w-full text-white py-2 rounded-lg transition ${
-            uploading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
-          }`}
+          className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition"
           onClick={handleUpload}
-          disabled={uploading}
         >
-          {uploading ? "Uploading..." : "Upload File"}
+          Upload File
         </button>
 
-        {/* Download Link */}
-        {downloadLink && (
-          <div className="mt-6 p-4 bg-green-100 border border-green-300 rounded">
-            <p className="font-semibold">File Uploaded Successfully!</p>
-            <p className="text-blue-700 break-all">{downloadLink}</p>
+        {uploadMessage && (
+          <p className="mt-4 text-center text-gray-700">{uploadMessage}</p>
+        )}
 
-            <button
-              className="mt-2 bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700"
-              onClick={() => navigator.clipboard.writeText(downloadLink)}
+        {downloadLink && (
+          <div className="mt-4 text-center">
+            <p className="text-green-600 font-semibold">Shareable Link:</p>
+            <a
+              href={downloadLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 underline"
             >
-              Copy Link
-            </button>
+              {downloadLink}
+            </a>
           </div>
         )}
       </div>
