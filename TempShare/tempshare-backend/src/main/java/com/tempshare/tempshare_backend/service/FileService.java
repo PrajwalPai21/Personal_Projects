@@ -14,33 +14,42 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class FileService {
+
     private final FileRepository fileRepository;
-    private final String uploadDir = "/home/pai/Documents/Personal_Projects/TempShare/tempshare-backend/src/uploads/";
+
+    // Absolute path (GOOD — avoids Tomcat temp issues)
+    private final String uploadDir =
+            "/home/pai/Documents/Personal_Projects/TempShare/tempshare-backend/src/uploads/";
 
     public FileEntity uploadFile(MultipartFile file) throws IOException {
 
         File folder = new File(uploadDir);
         if (!folder.exists()) {
-//        if the folder has not been created , just in case
+            // if the folder has not been created, just in case
             folder.mkdirs();
         }
-//        generate a unique file name to store, this is so that no conflicts occur .
-        String uniqueID = UUID.randomUUID().toString();
-        String storedName = uniqueID+ "_"+ file.getOriginalFilename();
 
-//        save
+        // generate a unique ID for public access
+        String fileId = UUID.randomUUID().toString();
+
+        // stored filename = UUID + original name (prevents conflicts)
+        String storedName = fileId + "_" + file.getOriginalFilename();
+
+        // save file to disk
         File savedFile = new File(uploadDir + storedName);
         file.transferTo(savedFile);
 
+        // build file metadata
         FileEntity fileEntity = FileEntity.builder()
+                .fileId(fileId)
                 .originalName(file.getOriginalFilename())
                 .storedName(storedName)
-                .downloadUrl("http://localhost:8080/files/" + uniqueID)
+                .downloadUrl("http://localhost:8080/files/" + fileId)
                 .size(file.getSize())
                 .uploadedAt(LocalDateTime.now())
                 .build();
 
-//        save in DB
+        // save metadata in DB
         return fileRepository.save(fileEntity);
     }
 }

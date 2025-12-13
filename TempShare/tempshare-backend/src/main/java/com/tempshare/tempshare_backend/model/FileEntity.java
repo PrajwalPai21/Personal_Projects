@@ -20,6 +20,7 @@ public class FileEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String fileId; // unique link to download the file
     private  String originalName;
     private String storedName; // this is because i dont wanna create cconflicts in file naming
     private String downloadUrl;
